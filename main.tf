@@ -17,7 +17,7 @@ data "aws_subnet" "subnet" {
 
 resource "aws_security_group" "demo_sg" {
   name        = "demo_sg"
-  description = "Permitir trafico entrante SSH y HTTP"
+  description = "Allow traffic from SSH and HTTP"
   vpc_id      = data.aws_vpc.main.id
 
   ingress = [
@@ -46,7 +46,7 @@ resource "aws_security_group" "demo_sg" {
   ]
 
   egress {
-    description      = "Trafico saliente"
+    description      = "Outbound traffic"
     from_port        = 0
     to_port          = 0
     protocol         = "-1"
@@ -80,7 +80,7 @@ data "aws_ami" "amazon-linux-2" {
   }
 }
 
-resource "aws_instance" "CloudInit" {
+resource "aws_instance" "instance" {
   ami                    = data.aws_ami.amazon-linux-2.id
   subnet_id              = tolist(data.aws_subnets.subnet_ids.ids)[0]
   instance_type          = var.instance_type
